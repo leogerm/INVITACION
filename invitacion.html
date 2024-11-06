@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Invitation</title>
+    <style>
+        /* General styles */
+        body {
+            margin: 0;
+            background-color: black;
+            overflow: hidden;
+            color: #FFFF82;
+        }
+
+        /* Star animation */
+        .star {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            background-color: white;
+        }
+
+        /* Intro text */
+        .intro {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            animation: intro 6s ease-out 1s;
+            color: rgb(75, 213, 238);
+            font-weight: 400;
+            font-size: 2.5em;
+            opacity: 0;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        @keyframes intro {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Logo animation */
+        .logo {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            margin: auto;
+            animation: logo 9s ease-out 9s;
+            opacity: 0;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Text board animation */
+        #board {
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+            transform: perspective(300px) rotateX(25deg);
+            transform-origin: 50% 100%;
+            text-align: justify;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            overflow: hidden;
+            font-size: 1.2em;
+            width: 80%;
+            height: 50em;
+            bottom: 0;
+        }
+
+        #content {
+            animation: scroll 100s linear 16s;
+            position: absolute;
+            top: 100%;
+        }
+
+        #title, #subtitle {
+            text-align: center;
+            color: #FFFF82;
+        }
+
+        @keyframes scroll {
+            0% { top: 100%; }
+            100% { top: -170%; }
+        }
+
+        /* Audio player */
+        .audio-player {
+            display: none; /* Hide the player visually */
+        }
+    </style>
+</head>
+<body>
+    <section class="intro">
+      El Cumpleaños de Leo Gael
+    </section>
+
+    <section class="logo">
+        <!-- Insert SVG logo here -->
+        <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="693.615px" height="419.375px" viewBox="0 0 693.615 419.375" enable-background="new 0 0 693.615 419.375"
+             xml:space="preserve">
+            <g id="Layer_2">
+                <g>
+                    <path fill="#FFE81F" d="... (contenido SVG omitido para brevedad)"/>
+                </g>
+            </g>
+        </svg>
+    </section>
+
+    <div id="board">  
+        <div id="content">
+            <p id="title">Episode 6</p>
+            <p id="subtitle">Hace mucho, mucho tiempo, en una galaxia muy, muy lejana...</p>
+            <br>
+            <p>En un periodo de gran celebración, la galaxia entera se prepara para el cumpleaños número 6 de Leo Gael, un joven aprendiz del lado oscuro que ha decidido convertirse en Darth Vader en este día muy especial.</p> 
+
+            <p>Guiado por la fuerza de la diversión, Leo ha convocado a héroes, villanos, Jedi para reunirse en una fiesta épica.</p>
+
+            <p>Prepárate para una celebración intergaláctica llena de sorpresas, juegos y duelos de sables de luz que resonarán en toda la galaxia.</p>
+
+            <p>Habrá fiesta de piscina, así que no olvides traer tu traje de baño y toalla.</p>
+
+            <p>Que la fuerza te acompañe mientras viajamos juntos a una galaxia llena de aventuras y diversión.</p>
+
+            <p><strong>Lugar:</strong> Avenida Manuel Cordova-Galarza, conjunto Alcázar de Toledo 2</p>
+            <p><strong>Fecha:</strong> Sábado 30 de noviembre de 2024</p>
+            <p><strong>Hora:</strong> 10:00 a.m.</p>
+
+            <p>Por favor, confirma tu asistencia en esta aventura intergaláctica.</p>        
+        </div>  
+    </div>
+
+    <!-- SoundCloud Audio Player -->
+    <iframe 
+        id="audio-player"
+        class="audio-player"
+        width="100%" 
+        height="50" 
+        scrolling="no" 
+        frameborder="no" 
+        allow="autoplay" 
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/alan-naudin-levi/star-wars-imperial-march-vaders-return-john-williams-cover&color=%230066cc&auto_play=true&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+    </iframe>
+
+    <script>
+        // Star background effect
+        const numStars = 100;
+
+        // Generate stars
+        for (let i = 0; i < numStars; i++) {
+            let star = document.createElement("div");  
+            star.className = "star";
+            let xy = getRandomPosition();
+            star.style.top = xy[0] + 'px';
+            star.style.left = xy[1] + 'px';
+            document.body.append(star);
+        }
+
+        function getRandomPosition() {  
+            let y = window.innerWidth;
+            let x = window.innerHeight;
+            let randomX = Math.floor(Math.random() * x);
+            let randomY = Math.floor(Math.random() * y);
+            return [randomX, randomY];
+        }
+
+        // Try to play audio automatically
+        window.addEventListener('load', () => {
+            const audioPlayer = document.getElementById('audio-player');
+            const playAudio = () => {
+                audioPlayer.contentWindow.postMessage(JSON.stringify({ method: 'play' }), '*');
+            };
+
+            // Attempt to play the audio after a short delay
+            setTimeout(playAudio, 2000);
+
+            // Optionally, add a button in case autoplay fails
+            const playButton = document.createElement('button');
+            playButton.innerText = "Play Music";
+            playButton.style.position = 'fixed';
+            playButton.style.top = '20px';
+            playButton.style.left = '20px';
+            playButton.style.zIndex = '1000';
+            playButton.onclick = () => playAudio();
+            document.body.appendChild(playButton);
+        });
+    </script>
+</body>
+</html>
